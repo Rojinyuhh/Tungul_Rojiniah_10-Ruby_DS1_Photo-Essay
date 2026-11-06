@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drill Sheet#1</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Faustina:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            500: '#b45309',
+                            600: '#92400e',
+                            700: '#78350f',
+                        },
+                        mahogany: {
+                            800: '#5c1d13',
+                            900: '#3a110a',
+                            950: '#210804',
+                        },
+                        parchment: {
+                            50: '#fcf8ec',
+                            100: '#f7efd5',
+                            200: '#eee0b4',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Cinzel', 'serif'],
+                        body: ['Faustina', 'serif'],
+                        cursive: ['Pinyon Script', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fcf8ec;
+            color: #210804;
+            font-family: 'Faustina', serif;
+            background-image: radial-gradient(circle at 50% 30%, #f7efd5 0%, #fcf8ec 80%);
+            background-attachment: fixed;
+        }
+
+        /* Mahogany Frame Styling for Light Mode */
+        .mahogany-frame {
+            border: 10px solid #3a110a;
+            border-image: linear-gradient(to bottom right, #5c1d13, #210804, #3a110a) 1;
+            box-shadow: 0 10px 25px rgba(58, 17, 10, 0.2);
+            position: relative;
+            background: #ffffff;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f7efd5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #92400e;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #78350f;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-200 selection:text-mahogany-950">
+
+    <!-- Main Content Area -->
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section class="relative py-20 px-4 text-center overflow-hidden border-b border-mahogany-900/10 bg-parchment-100/50">
+            <div class="relative z-10 max-w-4xl mx-auto">
+                <p class="text-amber-800 font-cursive text-3xl sm:text-6xl mb-2">El Filibusterismo</p>
+                <h2 class="text-4xl sm:text-6xl font-black font-serif text-mahogany-950 mb-6 tracking-wide drop-shadow-sm">
+                    MUSEO NG SALAMIN NG LIPUNAN
+                </h2>
+                <div class="w-24 h-1 bg-mahogany-900 mx-auto mb-6 rounded-full"></div>
+                <p class="text-lg sm:text-xl text-mahogany-900/90 leading-relaxed max-w-3xl mx-auto font-body italic">
+                    "Tignan ang mga larawan na nagsasalamin ng kahirapan ng ating lipunan na ipinapakita ng El Filibusterismo "
+                </p>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+            <!-- Exhibits Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="gallery-grid">
+                <!-- Exhibit Cards will be injected by JavaScript -->
+            </div>
+        </section>
+    </main>
+
+
+
+    <!-- INTERACTIVE EXHIBIT DETAIL MODAL / ROOM VIEW -->
+    <div id="exhibit-modal" class="fixed inset-0 z-50 hidden bg-mahogany-950/60 backdrop-blur-sm overflow-hidden flex items-center justify-center p-3 sm:p-5">
+        <div class="relative flex flex-col w-full max-w-6xl h-[88vh] max-h-[88vh] bg-white rounded-lg shadow-2xl border-4 border-mahogany-900 overflow-hidden my-2">
+            
+            <!-- Modal Header / Controls -->
+            <div class="shrink-0 bg-mahogany-950 text-amber-200 px-4 py-2 border-b-2 border-mahogany-900 flex justify-end items-center">
+                <button type="button" onclick="closeExhibitModal()" aria-label="Close exhibit" class="text-amber-200 hover:text-white text-2xl font-bold px-2 rounded transition">&times;</button>
+            </div>
+
+            <!-- Modal Content Grid -->
+            <div class="flex-1 min-h-0 overflow-hidden p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 bg-parchment-50">
+                
+                <!-- Left Column: Artwork Frame -->
+                <div class="lg:col-span-5 flex flex-col items-center justify-center">
+                    <div class="mahogany-frame p-2 sm:p-3 w-full shadow-lg">
+                        <img id="modal-image" src="" alt="Exhibit Artwork" class="block w-full h-[38vh] max-h-[390px] min-h-[230px] object-cover rounded-sm">
+                    </div>
+                </div>
+
+                <!-- Right Column: Detailed Explanation & Context -->
+                <div class="lg:col-span-7 min-h-0 space-y-5 flex flex-col justify-center">
+                    <div>
+                        <h2 id="modal-title" class="text-3xl xl:text-4xl font-bold font-serif text-mahogany-950 border-b-2 border-mahogany-900 pb-3 leading-tight">
+                            Exhibit Title
+                        </h2>
+                    </div>
+
+                    <!-- Historical / Literary Description -->
+                    <div>
+                        <p id="modal-description" class="text-base xl:text-lg text-mahogany-900 leading-7 font-body">
+                            Detailed text explanation will go here...
+                        </p>
+                    </div>
+
+                    <!-- Novel Context & Significance -->
+                    <div class="bg-parchment-100 p-4 rounded-lg border border-mahogany-900/20">
+                        <h4 class="font-serif font-bold text-mahogany-950 text-xs uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-scroll text-amber-800"></i> Pag-uugnay sa mga Kabanata ng El Filibusterismo
+                        </h4>
+                        <p id="modal-symbolism" class="text-sm xl:text-base leading-6 text-mahogany-900 italic">
+                            Symbolism description...
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="shrink-0 bg-parchment-100 px-4 py-3 border-t border-mahogany-900/20 flex justify-between items-center gap-3">
+                <button onclick="navigateExhibit(-1)" class="text-mahogany-950 hover:text-amber-800 text-xs sm:text-sm font-serif uppercase tracking-wider flex items-center gap-2 transition font-bold">
+                    <i class="fa-solid fa-arrow-left"></i> Previous Exhibit
+                </button>
+                <button onclick="closeExhibitModal()" class="bg-mahogany-900 hover:bg-mahogany-950 text-white font-bold text-xs sm:text-sm font-serif uppercase px-5 py-2 rounded shadow transition">
+                    Return to Main Gallery
+                </button>
+                <button onclick="navigateExhibit(1)" class="text-mahogany-950 hover:text-amber-800 text-xs font-serif uppercase tracking-wider flex items-center gap-2 transition font-bold">
+                    Next Exhibit <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // EDIT THIS LIST: each object represents one exhibit.
+        const exhibits = [
+            {
+                id: "lady",
+                title: "Bawat Hakbang, Bawat Pasan",
+                image: "images/lady.jpg",
+                description: "Isang malinaw na problema sa ating lipunan ay ang kawalan ng sapat na pampublikong serbisyo na nagtutulak sa mga kababaihan at mga ibang miyembro ng pamilya na pasanin ng mag-isa ang epekto ng krisis. Sa tuwing may sukuna o matinding problema, ang mga kababaihan ang madalas naghahanap ng paraan upang mailigtas lamang ang kanilang pamilya. Ang ganitong pagtitiis ay hindi lamang simpleng problema, kundi ito ay resulta ng kapabayaan ng lipunan sa pagbibigay ng sapat na proteksyon sa mga mahihirap. Kailangan magkaroon ng mga programang tumutulong sa mga pamilyang apektado sa kahirapan at dusa. Ang ating mga pamahalaan ay dapat nagseserbisyong totoo at nagtatanggol sa mga kababaihan at mahihirap.",
+                symbolism: "Kabanata 4: Ang larawan ng isang ina na nagdadala ng mga ‘reliefs’ para sa kanyang pamilya kahit na mataas ang baha ay sumisimbolo sa matinding sakripisyo na pinagdaanan ni Juli. Katulad ng babae na dumadaan sa baha, ginawa ni Juli ang lahat para makakuha ng limang daang piso upang makatulong lamang sa kanyang tatay.",
+            },
+            {
+                id: "skyway",
+                title: "Ang Anino ng Kaunlaran",
+                image: "images/skyway.PNG",
+                description: "Sa modernong panahon, pagpunta sa bayan madalas nating makita ang pagtatayo ng mga malalaking gusali habang nanatiling baon sa kahirapan ang mga komunidad sa ilalim nito. Ang mga magagandang gusali sa itaas ay nagsisilbing takip o “maskara” upang hindi mapansin ang sistemang patuloy-tuloy sinisira ang mga nasa ibaba. Ang ganitong uri ng pag-unlad ay paimbawaw lamang upang ipakita na tayo ay nakaksabay rin sa mga ibang bansa, sapagkat hindi nito naayus ang tunay na problema sa ating lipunan. Ang aking adbokasiya ay ang pagsulong sa totoong pag-unlad at pag-angat ng ating bansa, kung saan ang mga buwis na binabayad ay ginagamit para sa taong bayan. Ang mga ideya na ipinapakita ay gawin kaysa sa ang mga pera ay mapunta lamang sa bulsa ng mga korap na opisyal.",
+                symbolism: "Kabanata 7: Ang mataas na tanawin mula sa itaas na tinatago sa mga lugar na kapus-palad ay sumsimbolo sa pananaw at pangaral ni Simoun kay Basilio. Katulad ng mga gusali sa itaas, ipinahihiwatig ni Simoun na ang paimbabaw ng pag-aangkop at huwad na pag-unlad ay nagtatakip lamang sa tunay na paghihirap ng ating bayan.",
+            },
+            {
+                id: "flood",
+                category: "Setting",
+                title: 'Ang Ilalim ng Bapor Tabo',
+                image: "images/flood.jpg",
+                description: "Noong setyembre ng taon na ito, iyan ang “bagong normal” na kinakailangan pagdaanan ng mga tao sa Minalin kung sila ay kapus-palad. Malinaw na makikita sa ating bansa ang malaking pagitan ng mga mayayaman at mahihirap tuwing may darating na kalamidad katulad ng bagyo. Ang kawalan ng maayos na sistema ng drainage at ang nawawalang tulong ng pamahalaan ay lalong nagpapahirap sa mga taong nasa ibaba ng lipunan. Kinakailangan nilang maglakad sa mga kalsada na puno ng maduming tubig upang makakuha lamang ng mga ‘reliefs’ na binibigay ng gobyerno bilang ‘band-aid solution’. Ang aking adbokasiya ay ang pagsusulong ng pantay na pagtrato sa mga tao sa ating lipunan. Hindi dapat maghintay ang gobyerno na mangyari ang sakuna; sa halip dapat itong ayusin bago pa ito lumala. Hindi rin dapat na porket kuntento na ang mga tao sa taas, pabayaan na ang mga tao sa ibabaw ng lipunan. ",
+                symbolism: "Kabanata 1 at 2: Ang maliit na bangka ay nag-uugnay sa mga tao sa ilalim ng Bapor Tabo. Sila ay ang mga taong pinapabayaan, ang mga taong hinahayaan mahirapan dahil lang masaya na ang mga tao sa itaas. At katulad ng bapor tabo, ang ating lipunan ay nanatiling mabagal at nakahati hangga’t hindi pinapansin ang kapakanan ng mga nasa ibaba.",
+            },
+            {
+                id: "abandoned",
+                title: "Pader ng Galit at Paglimot",
+                image: "images/abandoned.jpg",
+                description: "Sa kasalukuyan, nararamdaman ng mga Pilipino ang matinding epekto ng modernong pang-aagaw ng lupa sa mga probinsya. Ang mga iniwan na gusali at napabayaang imprastraktura ay nagsisilbing saksi sa mga pangarap na napilitang kalimutan dahil sa ating sistemang puno ng kapabayaan. Sa likod ng mga natuyong semento at bandalismo ay ang galit ng mga mamamayang patuloy ng ginigipit at pilit pa ring pinapatahimik. Upang mawasakan ang siklo ng paglimot at pag tahimik, kinakailangang magkaroon ng tunay na reporma sa proteksyon sa mga lupa ng mga Pilipino. Ang aking adbokasiya ay ang pagsusulong ng isang lipunan na makatarungan kung saan ang mga boses ng mga tao at ang kanilang lupa ay hindi makuha at kalimutan.",
+                symbolism: "Kabanata 4: Ang larawan ng iniwan na struktura ay nagpapakita sa nawasak na tahanan at inagaw na lupa ni Cabesang Tales. Ito ay nagpapakita ng lupa na kinakailangan isuko ni Cabesang Tales dahil sa mga masasamang prayle katulad ng mga ibang mga lupa na kinakailangan isuko para sa gobyerno.Katulad ng lupa ni Cabesang Tales na pinagbuhusan niya ng sipag at pawis, ang estruktura sa larawan ay buo at pinaghirapang itayo bago tuluyang napabayaan.",
+            },
+            {
+                id: "maria-clara-locket",
+                title: "Ang Pangakong Hindi Natatapos",
+                image: "images/sticko.jpg",
+                description: "Sa kasalukuyan, madalas nating makikita ang mga proyektong pampubliko na matagal nang hindi natatapos ngunit napapalibutan ng malaking mukha at pangalan ng mga tao sa pulitiko. Ang ganitong sistema na binubuo ng mga makasariling mga opisyal ay nagdudulot ng perwisyo at abala sa mga mamamayan na araw-araw nagtitiis sa kalsada. Upang matapos ang ganitong sitwasyon, kailangan panagutan ng mga opisyal ang kanilang mga pangako. Ang aking adbosasiya ay ang pagkakaroon ng tapat at mabilis na pamahalaan na nakatuon sa tunay na pagtulong sa halip na sa mga opsiyal na tumatakbo para sa kanilang sariling interes.",
+                symbolism: "Kabanata 5: Ang mga hindi matapos-tapos na pilar ng tulay na nakatayo sa gitna ng trapiko ay sumisimbolo sa pinagdaanan ni Sinong. Ito ay nagpapakita kung paanong ang mga kapangyarihan ay abala sa pagpapakita ng kanilang awtoridad habang ang mga mamamayan ay patuloy nagdurusa.",
+            },
+            
+        ];
+
+        let currentExhibitIndex = 0;
+
+        // Build the gallery from the exhibit list above.
+        function renderGallery() {
+            const gallery = document.getElementById("gallery-grid");
+
+            gallery.innerHTML = exhibits.map((exhibit, index) => `
+                <button
+                    type="button"
+                    onclick="openExhibitModal(${index})"
+                    class="group w-full text-left cursor-pointer transform hover:-translate-y-2 transition duration-500"
+                    aria-label="Open exhibit: ${exhibit.title}"
+                >
+                    <div class="mahogany-frame p-3 shadow-md bg-white">
+                        <div class="relative overflow-hidden">
+                            <img
+                                src="${exhibit.image}"
+                                alt="${exhibit.title}"
+                                onerror="this.onerror=null; this.alt='Image not found: ${exhibit.image}'; this.classList.add('opacity-30');"
+                                class="w-full h-64 object-cover group-hover:scale-105 transition duration-700"
+                            >
+                        </div>
+                        <div class="mt-4 p-3 text-center bg-parchment-50 border border-mahogany-900/10 rounded">
+                            <h4 class="font-serif font-bold text-lg text-mahogany-950 group-hover:text-amber-800 transition">
+                                ${exhibit.title}
+                            </h4>
+                            <div class="mt-3 text-xs text-mahogany-900/70 flex items-center justify-center gap-1 group-hover:text-amber-800 font-bold">
+                                <span>Enter Exhibit Room</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+            `).join("");
+        }
+
+        // Open the selected exhibit and fill in its details.
+        function openExhibitModal(index) {
+            currentExhibitIndex = index;
+            const exhibit = exhibits[index];
+
+            document.getElementById("modal-title").textContent = exhibit.title;
+            document.getElementById("modal-image").src = exhibit.image;
+            document.getElementById("modal-image").alt = exhibit.title;
+            document.getElementById("modal-description").textContent = exhibit.description;
+            document.getElementById("modal-symbolism").textContent = exhibit.symbolism;
+            document.getElementById("exhibit-modal").classList.remove("hidden");
+            document.body.style.overflow = "hidden";
+        }
+
+        // Close the exhibit room.
+        function closeExhibitModal() {
+            document.getElementById("exhibit-modal").classList.add("hidden");
+            document.body.style.overflow = "";
+        }
+
+        // Move forward or backward through the exhibits.
+        function navigateExhibit(direction) {
+            const nextIndex =
+                (currentExhibitIndex + direction + exhibits.length) % exhibits.length;
+            openExhibitModal(nextIndex);
+        }
+
+        // Render the gallery when the page is ready.
+        document.addEventListener("DOMContentLoaded", renderGallery);
+
+        // Allow the Escape key to close the exhibit room.
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                closeExhibitModal();
+            }
+        });
+    </script>
+</body>
+</html>
